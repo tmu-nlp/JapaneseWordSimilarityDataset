@@ -59,9 +59,9 @@ def Spearman(tuple_list):
 
 # ---------------test---------------------
 if __name__ == '__main__':
-    sample_tuple_list = [(1, 5), (2, 4), (3, 3), (4, 3), (5, 1)]
-    print ('--------Spearman-------')
-    print (Spearman(sample_tuple_list))
+    #sample_tuple_list = [(1, 5), (2, 4), (3, 3), (4, 3), (5, 1)]
+    #print ('--------Spearman-------')
+    #print (Spearman(sample_tuple_list))
 
     l = list()
     with open(sys.argv[1], "r") as f:
@@ -97,18 +97,6 @@ if __name__ == '__main__':
     for key in w2rank_w2v.keys():
         tuple_list.append((w2rank_hum[key], w2rank_w2v[key]))
     print(tuple_list)
-    print ('--------Spearman-------')
-    print (Spearman(tuple_list))
-
-    tuple_list = []
-    for key in w2rank_w2v.keys():
-        tuple_list.append((w2rank_hum[key], w2rank_hum[key]))
-    print ('--------Spearman-------')
-    print (Spearman(tuple_list))
-
-    tuple_list = []
-    for key in w2rank_w2v.keys():
-        tuple_list.append((w2rank_w2v[key], w2rank_w2v[key]))
     print ('--------Spearman-------')
     print (Spearman(tuple_list))
 
