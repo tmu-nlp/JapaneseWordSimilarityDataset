@@ -37,6 +37,7 @@ sub* : 各アノテータが付けた類似度
 
 ## 論文
 
+1. Yuya Sakaizawa and Mamoru Komachi. Construction of a Japanese Word Similarity Dataset. In 11th edition of the Language Resources and Evaluation Conference (LREC 2018). May 2018. (to appear)
 1. Yuya Sakaizawa and Mamoru Komachi. Construction of a Japanese Word Similarity Dataset. In arXiv e-prints, 1703.05916 (5 pages). March 2017.
 2. 堺澤勇也, 小町守. 日本語動詞・形容詞類似度データセットの構築. 言語処理学会第22回年次大会, pp.262-265. March 2016.
 
