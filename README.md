@@ -37,10 +37,12 @@ sub* : the similarity score for each annotator
 
 ## Helper script in src
 
-The src directory contains a helper script to calcurate Spearman's  rank
+The src directory contains a helper script to calculate Spearman's  rank
 correlation coefficient used in our LREC paper.
 
-実際の実験は Wikipedia で学習した単語ベクトルから単語ペア間の類似度を計算して平均の値との順位相関を算出しています。
+Specifically, we learned word vectors from Japanese Wikipedia to
+calculatethe  rank correlation coefficient between the similarity of
+word pairs and mean of annotated scores.
 
 ## License
 
