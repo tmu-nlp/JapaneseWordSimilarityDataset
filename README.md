@@ -26,10 +26,12 @@ recruite 10 annotators to assign 11 levels of similarity for word pairs.
 
 The sample of the dataset is as follows:
 
-word1 | word2 | mean | sub1 | sub2 | ... | sub9 | sub10
------------- | ------------- | ------------ | ------------ | ------------ | ------------ | ------------ | ------------ 
-排除する | 無視する  | 4.6 | 5 | 3 | ... | 5 | 6
-排除する | 除外する  | 6.6 | 7 | 6 | ... | 5 | 7
+word1 | word2 | mean(remove_extreme_annotator) | sub1 | sub2 | ... | sub9 | sub10 | mean |
+------------ | ------------- | ------------ | ------------ | ------------ | ------------ | ------------ | ------------ | ------------ | 
+排除する | 無視する  | 4.6 | 5 | 3 | ... | 5 | 6 | 4.8 |
+排除する | 除外する  | 6.6 | 7 | 6 | ... | 5 | 7 | 6.8 |
+
+mean(remove_extreme_annotator) : average of the similarity scores assigned by annotators(the annotator attached an extreme value are removed)
 
 mean : average of the similarity scores assigned by annotators
 
