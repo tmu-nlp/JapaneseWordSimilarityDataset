@@ -69,7 +69,7 @@ if __name__ == '__main__':
         header = next(reader)
         for row in reader:
             key = row[0]+","+row[1]
-            # csv内にあるコンピュータが出した類似度を一番最後になるようにしてください。
+            # The last value contains the mean of the similarity scores
             l.append((key, float(row[2]), float(row[-1])))
 
     w2rank_hum = dict()
