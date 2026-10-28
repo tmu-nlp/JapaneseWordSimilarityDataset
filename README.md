@@ -46,6 +46,15 @@ Specifically, we learned word vectors from Japanese Wikipedia to
 calculatethe  rank correlation coefficient between the similarity of
 word pairs and mean of annotated scores.
 
+Usage:
+
+    python src/Spearman.py score_verb.csv MODEL_SCORES
+
+`MODEL_SCORES` is a CSV file with lines of `word1,word2,similarity`
+(e.g., the cosine similarity of the word vectors) covering every pair in
+the dataset. The script correlates it with
+`mean(remove_extreme_annotator)` (the third column).
+
 ## License
 
 Our work is licensed under Creative Commons Attribution-ShareAlike 3.0

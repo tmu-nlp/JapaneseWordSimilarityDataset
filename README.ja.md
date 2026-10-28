@@ -37,6 +37,12 @@ sub* : 各アノテータが付けた類似度
 
 実際の実験は Wikipedia で学習した単語ベクトルから単語ペア間の類似度を計算して平均の値との順位相関を算出しています。
 
+使い方：
+
+    python src/Spearman.py score_verb.csv MODEL_SCORES
+
+`MODEL_SCORES` は `word1,word2,類似度` を 1 行ずつ並べた CSV ファイル（例：単語ベクトルのコサイン類似度）で、データセットの全単語ペアを含む必要があります。スクリプトは 3 列目の `mean(remove_extreme_annotator)` との順位相関を計算します。
+
 ## ライセンス
 
 Creative Commons Attribution-ShareAlike 3.0 Unported (CC BY-SA 3.0)
