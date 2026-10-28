@@ -48,9 +48,10 @@ def Spearman(tuple_list):
     list_length = len(tuple_list)
     ranks_a, ranks_b = zip(*tuple_list)
     pattern = 0
-    if max(ranks_a) != list_length: ranks_a = change_rank_num(ranks_a)
+    # with tied ranks (1, 2, 2, 4, ...) the maximum rank can still be N, so look for duplicates
+    if len(set(ranks_a)) != list_length: ranks_a = change_rank_num(ranks_a)
     else: pattern += 1
-    if max(ranks_b) != list_length: ranks_b = change_rank_num(ranks_b)
+    if len(set(ranks_b)) != list_length: ranks_b = change_rank_num(ranks_b)
     else: pattern += 1
     if pattern == 2: return normal_spearman(tuple_list, list_length)
     else: return same_order_spearman(zip(ranks_a, ranks_b), list_length)
@@ -63,39 +64,53 @@ if __name__ == '__main__':
     #print ('--------Spearman-------')
     #print (Spearman(sample_tuple_list))
 
+    # usage: python Spearman.py score_xxx.csv MODEL_SCORES
+    #   MODEL_SCORES: lines of "word1,word2,similarity" (e.g., cosine similarity of word vectors)
+    if len(sys.argv) != 3:
+        sys.exit('usage: python Spearman.py score_xxx.csv MODEL_SCORES')
+
+    w2v = dict()
+    with open(sys.argv[2], "r") as f:
+        for row in csv.reader(f):
+            try:
+                w2v[row[0]+","+row[1]] = float(row[2])
+            except (IndexError, ValueError): # header or blank line
+                continue
+
     l = list()
     with open(sys.argv[1], "r") as f:
         reader = csv.reader(f)
         header = next(reader)
         for row in reader:
             key = row[0]+","+row[1]
-            # The last value contains the mean of the similarity scores
-            l.append((key, float(row[2]), float(row[-1])))
+            if key not in w2v:
+                sys.exit('no similarity for ' + key + ' in ' + sys.argv[2])
+            # human score: mean(remove_extreme_annotator), the third column
+            l.append((key, float(row[2]), w2v[key]))
 
-    w2rank_hum = dict()
-    w2rank_w2v = dict()
+    # ranks are kept by position, since a word pair can appear more than once
+    w2rank_hum = [0] * len(l)
+    w2rank_w2v = [0] * len(l)
     real_rank = 0
     score = 1000000000
-    for rank, (key,hum_score,_) in enumerate(sorted(l, key=lambda x: -x[1])):
+    for rank, (i, (key,hum_score,_)) in enumerate(sorted(enumerate(l), key=lambda x: -x[1][1])):
         if hum_score == score:
-            w2rank_hum[key] = real_rank
+            w2rank_hum[i] = real_rank
         else:
             real_rank = rank + 1
-            w2rank_hum[key] = real_rank
+            w2rank_hum[i] = real_rank
         score = hum_score
     real_rank = 0
     score = 10000000
-    for rank, (key,_,w2v_score) in enumerate(sorted(l, key=lambda x: -x[2])):
+    for rank, (i, (key,_,w2v_score)) in enumerate(sorted(enumerate(l), key=lambda x: -x[1][2])):
         if w2v_score == score:
-            w2rank_w2v[key] = real_rank
+            w2rank_w2v[i] = real_rank
         else:
-            real_rank = rank + 1 
-            w2rank_w2v[key] = real_rank
+            real_rank = rank + 1
+            w2rank_w2v[i] = real_rank
         score = w2v_score
 
-    tuple_list = []
-    for key in w2rank_w2v.keys():
-        tuple_list.append((w2rank_hum[key], w2rank_w2v[key]))
+    tuple_list = list(zip(w2rank_hum, w2rank_w2v))
     print(tuple_list)
     print ('--------Spearman-------')
     print (Spearman(tuple_list))
